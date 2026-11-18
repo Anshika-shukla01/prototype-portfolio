@@ -1,0 +1,954 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Design & AI Systems — Assignment Portfolio</title>
+    <style>
+        :root {
+            --ink: #17212b;
+            --muted: #687684;
+            --line: #e7ebef;
+            --bg: #f7f9fb;
+            --white: #fff;
+            --green: #16866b;
+            --green2: #e9f7f1;
+            --blue: #315eea;
+            --purple: #7355d9;
+            --orange: #ffb45b
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer;
+            border: 0
+        }
+
+        .wrap {
+            max-width: 1160px;
+            margin: auto;
+            padding: 0 24px
+        }
+
+        .top {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 5
+        }
+
+        .nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px
+        }
+
+        .brand {
+            font-weight: 850;
+            letter-spacing: -.7px;
+            font-size: 19px
+        }
+
+        .brand span {
+            color: var(--green)
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap
+        }
+
+        .tabs button {
+            background: transparent;
+            color: var(--muted);
+            padding: 10px 13px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .tabs button.active,
+        .tabs button:hover {
+            background: #edf5f2;
+            color: var(--green)
+        }
+
+        .section {
+            display: none;
+            padding: 42px 0 72px
+        }
+
+        .section.active {
+            display: block
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--green)
+        }
+
+        h1 {
+            font-size: clamp(34px, 5vw, 58px);
+            line-height: 1.04;
+            letter-spacing: -2px;
+            margin: 12px 0 18px
+        }
+
+        h2 {
+            font-size: 30px;
+            letter-spacing: -1px;
+            margin: 0 0 10px
+        }
+
+        h3 {
+            margin: 0 0 7px;
+            font-size: 18px
+        }
+
+        .lead {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 680px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--green);
+            color: white;
+            padding: 13px 18px;
+            border-radius: 11px;
+            font-weight: 750;
+            text-decoration: none
+        }
+
+        .btn.alt {
+            background: white;
+            color: var(--ink);
+            border: 1px solid var(--line)
+        }
+
+        .btn.blue {
+            background: var(--blue)
+        }
+
+        .btn.purple {
+            background: var(--purple)
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #e9f7f1, #f3f7ff);
+            border: 1px solid #dceee7;
+            border-radius: 25px;
+            padding: clamp(25px, 5vw, 56px);
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 28px;
+            align-items: center
+        }
+
+        .hero-art {
+            min-height: 245px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #b9e9d7, #d8e6ff);
+            display: grid;
+            place-items: center;
+            font-size: 100px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero-art:after {
+            content: "";
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            border: 1px solid #ffffff99;
+            border-radius: 50%;
+            right: -50px;
+            top: -40px
+        }
+
+        .pill {
+            display: inline-block;
+            border-radius: 99px;
+            background: #fff;
+            padding: 7px 12px;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 800
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            padding: 20px;
+            box-shadow: 0 4px 18px #14253608
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            background: var(--green2);
+            display: grid;
+            place-items: center;
+            font-size: 23px;
+            margin-bottom: 13px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .searchbox {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr auto;
+            gap: 10px;
+            background: #fff;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            margin: 25px 0
+        }
+
+        .field {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 13px;
+            background: #fff;
+            color: var(--ink);
+            outline: none
+        }
+
+        .field:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px #16866b18
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0 22px
+        }
+
+        .filter {
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: 99px;
+            padding: 8px 13px;
+            color: #566371;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .filter.active {
+            background: #e9f7f1;
+            border-color: #b9e4d4;
+            color: var(--green)
+        }
+
+        .provider {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start
+        }
+
+        .avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 15px;
+            background: #e8f0ff;
+            display: grid;
+            place-items: center;
+            font-size: 26px;
+            flex: none
+        }
+
+        .provider .btn {
+            padding: 9px 12px;
+            font-size: 12px
+        }
+
+        .tag {
+            font-size: 11px;
+            background: #f1f5f8;
+            color: #566371;
+            padding: 4px 8px;
+            border-radius: 99px;
+            display: inline-block;
+            margin: 3px 3px 0 0
+        }
+
+        .course-hero {
+            background: linear-gradient(120deg, #111d3d, #313f80);
+            color: white;
+            border-radius: 25px;
+            padding: clamp(25px, 5vw, 55px);
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 25px;
+            align-items: center
+        }
+
+        .course-hero .lead {
+            color: #d2d9ef
+        }
+
+        .course-hero .eyebrow {
+            color: #a7baff
+        }
+
+        .course-hero h1 {
+            max-width: 650px
+        }
+
+        .statbox {
+            background: #ffffff12;
+            border: 1px solid #ffffff2c;
+            border-radius: 18px;
+            padding: 22px
+        }
+
+        .stat {
+            font-size: 32px;
+            font-weight: 850
+        }
+
+        .course-card {
+            position: relative;
+            overflow: hidden
+        }
+
+        .course-card .icon {
+            background: #f0edff
+        }
+
+        .price {
+            font-weight: 850;
+            color: var(--purple);
+            font-size: 19px
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 22px
+        }
+
+        .step {
+            padding: 16px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px
+        }
+
+        .num {
+            font-size: 12px;
+            font-weight: 850;
+            color: var(--purple)
+        }
+
+        .formbox {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 22px;
+            max-width: 620px
+        }
+
+        .formgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .formbox label {
+            display: block;
+            font-size: 12px;
+            font-weight: 750;
+            margin: 10px 0 5px
+        }
+
+        .carousel-shell {
+            background: #f2efff;
+            border-radius: 23px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 25px;
+            align-items: center
+        }
+
+        .slide {
+            aspect-ratio: 4/5;
+            background: linear-gradient(145deg, #17203c, #4c3b91);
+            border-radius: 18px;
+            color: #fff;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 15px 35px #21174a22
+        }
+
+        .slide .snum {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #c8bfff
+        }
+
+        .slide h2 {
+            font-size: 34px;
+            line-height: 1.08;
+            letter-spacing: -1.2px
+        }
+
+        .slide p {
+            color: #e1def7
+        }
+
+        .slide .foot {
+            font-size: 11px;
+            color: #c8bfff
+        }
+
+        .controls {
+            display: flex;
+            gap: 9px;
+            margin-top: 12px
+        }
+
+        .controls button {
+            padding: 10px 14px;
+            border-radius: 9px;
+            background: #fff;
+            border: 1px solid #ddd6fa;
+            font-weight: 750
+        }
+
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 20px
+        }
+
+        .wf {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            padding: 14px;
+            font-size: 13px
+        }
+
+        .wf b {
+            display: block;
+            margin: 6px 0
+        }
+
+        .callout {
+            background: #fff8ec;
+            border: 1px solid #ffe2b5;
+            padding: 16px;
+            border-radius: 13px;
+            color: #76501b;
+            margin-top: 18px
+        }
+
+        .footer {
+            padding: 25px 0;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        @media(max-width:760px) {
+            .nav {
+                height: auto;
+                padding-top: 13px;
+                padding-bottom: 13px;
+                align-items: flex-start;
+                flex-direction: column
+            }
+
+            .hero,
+            .course-hero,
+            .carousel-shell {
+                grid-template-columns: 1fr
+            }
+
+            .hero-art {
+                min-height: 160px
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .searchbox {
+                grid-template-columns: 1fr
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .workflow {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .formgrid {
+                grid-template-columns: 1fr
+            }
+
+            .slide {
+                max-width: 330px;
+                margin: auto
+            }
+
+            .tabs button {
+                padding: 8px 9px;
+                font-size: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top">
+        <div class="wrap nav">
+            <div class="brand">FIELDNOTE <span>／</span> PRODUCT LAB</div>
+            <div class="tabs">
+                <button class="active" data-tab="animals">01 · Animal care</button><button data-tab="academy">02 · AI
+                    academy</button><button data-tab="studio">03 · Content studio</button>
+            </div>
+        </div>
+    </header>
+    <main class="wrap">
+        <section id="animals" class="section active">
+            <div class="hero">
+                <div><span class="pill">PRACTO FOR ANIMALS · MVP CONCEPT</span>
+                    <div class="eyebrow" style="margin-top:22px">Better care starts with the right connection</div>
+                    <h1>Every animal deserves <span style="color:var(--green)">good care.</span></h1>
+                    <p class="lead">Discover trusted veterinary clinics, hospitals and animal-care services near you —
+                        all in one place.</p><a class="btn" href="#find-care"
+                        onclick="document.getElementById('find-care').scrollIntoView({behavior:'smooth'})">Find care
+                        near me →</a> <a class="btn alt" href="#list-provider"
+                        onclick="document.getElementById('list-provider').scrollIntoView({behavior:'smooth'})">List your
+                        business</a>
+                </div>
+                <div class="hero-art">🐾</div>
+            </div>
+            <div style="padding:40px 0 10px">
+                <div class="eyebrow">Explore services</div>
+                <h2>What does your animal need today?</h2>
+                <p class="muted">Start with a service, then compare relevant providers.</p>
+                <div class="grid">
+                    <div class="card">
+                        <div class="icon">🩺</div>
+                        <h3>Veterinary clinics</h3>
+                        <p class="muted">Routine check-ups, vaccinations and everyday care.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🏥</div>
+                        <h3>Animal hospitals</h3>
+                        <p class="muted">Advanced treatment, surgery and emergency support.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🏡</div>
+                        <h3>Boarding & day care</h3>
+                        <p class="muted">Safe stays and supervised care while you're away.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🧪</div>
+                        <h3>Diagnostics</h3>
+                        <p class="muted">Laboratory tests, imaging and health screening.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🚑</div>
+                        <h3>Animal ambulance</h3>
+                        <p class="muted">Find transport support for urgent situations.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">❤️</div>
+                        <h3>NGOs & shelters</h3>
+                        <p class="muted">Connect with rescue, adoption and welfare groups.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="find-care" style="padding:40px 0 10px">
+                <div class="eyebrow">Discover providers</div>
+                <h2>Find the right care, faster.</h2>
+                <p class="muted">Prototype directory data for demonstrating search and filtering.</p>
+                <div class="searchbox"><input id="search" class="field"
+                        placeholder="Search clinic, service or provider…"><select id="city" class="field">
+                        <option value="">All locations</option>
+                        <option>Lucknow</option>
+                        <option>Delhi</option>
+                        <option>Pune</option>
+                    </select><button class="btn" onclick="filterProviders()">Search</button></div>
+                <div class="filters"><button class="filter active" data-filter="All">All services</button><button
+                        class="filter" data-filter="Vet">Veterinary</button><button class="filter"
+                        data-filter="Hospital">Hospital</button><button class="filter"
+                        data-filter="Boarding">Boarding</button><button class="filter"
+                        data-filter="Diagnostics">Diagnostics</button><button class="filter"
+                        data-filter="NGO">NGO</button></div>
+                <div id="providers" class="grid">
+                    <div class="card provider" data-type="Vet" data-city="Lucknow"
+                        data-search="happy paws veterinary clinic vaccination consultation">
+                        <div class="avatar">🐶</div>
+                        <div>
+                            <h3>Happy Paws Veterinary Clinic</h3>
+                            <div class="small">Lucknow · Veterinary clinic</div>
+                            <p class="muted">Consultations · Vaccination · Preventive care</p><span class="tag">Verified
+                                demo listing</span><span class="tag">Open today*</span>
+                            <p><a class="btn alt" href="#list-provider">View details</a></p>
+                        </div>
+                    </div>
+                    <div class="card provider" data-type="Hospital" data-city="Lucknow"
+                        data-search="city animal hospital emergency surgery">
+                        <div class="avatar">🐾</div>
+                        <div>
+                            <h3>City Animal Hospital</h3>
+                            <div class="small">Lucknow · Animal hospital</div>
+                            <p class="muted">Emergency care · Surgery · In-patient support</p><span class="tag">Demo
+                                listing</span><span class="tag">Emergency services</span>
+                            <p><a class="btn alt" href="#list-provider">View details</a></p>
+                        </div>
+                    </div>
+                    <div class="card provider" data-type="Boarding" data-city="Delhi"
+                        data-search="paws and stay pet boarding daycare">
+                        <div class="avatar">🏡</div>
+                        <div>
+                            <h3>Paws & Stay</h3>
+                            <div class="small">Delhi · Boarding facility</div>
+                            <p class="muted">Pet boarding · Day care · Supervised play</p><span class="tag">Demo
+                                listing</span>
+                            <p><a class="btn alt" href="#list-provider">View details</a></p>
+                        </div>
+                    </div>
+                    <div class="card provider" data-type="Diagnostics" data-city="Pune"
+                        data-search="vetlab diagnostics blood test imaging">
+                        <div class="avatar">🧪</div>
+                        <div>
+                            <h3>VetLab Diagnostics</h3>
+                            <div class="small">Pune · Diagnostics</div>
+                            <p class="muted">Blood tests · Imaging · Sample collection</p><span class="tag">Demo
+                                listing</span>
+                            <p><a class="btn alt" href="#list-provider">View details</a></p>
+                        </div>
+                    </div>
+                    <div class="card provider" data-type="NGO" data-city="Lucknow"
+                        data-search="kind tails animal rescue ngo adoption">
+                        <div class="avatar">❤️</div>
+                        <div>
+                            <h3>Kind Tails Foundation</h3>
+                            <div class="small">Lucknow · Animal welfare NGO</div>
+                            <p class="muted">Rescue · Adoption · Community support</p><span class="tag">Demo
+                                listing</span>
+                            <p><a class="btn alt" href="#list-provider">View details</a></p>
+                        </div>
+                    </div>
+                </div>
+                <p id="empty" class="muted hidden">No matching demo providers. Try another service or location.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Useful provider information</h3>
+                    <p class="muted">Name, services, address/map, phone, hours, fees, species served, facilities,
+                        photos, verification status and reviews.</p>
+                </div>
+                <div class="card">
+                    <h3>Trust & safety</h3>
+                    <p class="muted">Show verification status clearly, allow users to report incorrect details and avoid
+                        presenting unverified claims as endorsements.</p>
+                </div>
+                <div class="card">
+                    <h3>Mobile-first experience</h3>
+                    <p class="muted">Large tap targets, short forms, location-aware search, readable cards and a
+                        persistent emergency contact pathway.</p>
+                </div>
+            </div>
+            <div id="list-provider" class="card" style="margin-top:22px">
+                <h3>Are you an animal-care provider?</h3>
+                <p class="muted">Help more pet parents discover your services.</p><button class="btn"
+                    onclick="alert('Demo interaction: provider listing enquiry. Connect this CTA to a real form or CRM in production.')">List
+                    your business →</button> <button class="btn alt"
+                    onclick="alert('Demo interaction: correction report. A production version would collect listing URL and correction details.')">Submit
+                    a correction</button>
+            </div>
+        </section>
+
+        <section id="academy" class="section">
+            <div class="course-hero">
+                <div>
+                    <div class="eyebrow">PRACTICAL AI · DIGITAL SKILLS · CAREER READY</div>
+                    <h1>Learn skills that move you <span style="color:#a9baff">forward.</span></h1>
+                    <p class="lead">Hands-on programmes that help students and young professionals use AI and digital
+                        tools to solve real-world problems.</p><button class="btn blue"
+                        onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Explore
+                        programmes →</button> <button class="btn alt"
+                        onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Talk to an
+                        advisor</button>
+                </div>
+                <div class="statbox">
+                    <div style="font-size:42px">✦</div>
+                    <div class="stat">Learn.</div>
+                    <div class="stat">Build.</div>
+                    <div class="stat">Showcase.</div>
+                    <p style="color:#d2d9ef">A practical learning journey, from first prompt to portfolio-ready project.
+                    </p>
+                </div>
+            </div>
+            <div style="padding:42px 0 10px">
+                <div class="eyebrow">Why learn with us</div>
+                <h2>Less passive watching. More doing.</h2>
+                <div class="grid">
+                    <div class="card">
+                        <div class="icon">🧩</div>
+                        <h3>Project-based learning</h3>
+                        <p class="muted">Apply concepts through guided, practical assignments.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🤖</div>
+                        <h3>AI in everyday work</h3>
+                        <p class="muted">Learn prompting, research, productivity and responsible AI use.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🎯</div>
+                        <h3>Portfolio outcomes</h3>
+                        <p class="muted">Create tangible work you can discuss in interviews.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:35px 0 10px">
+                <div class="eyebrow">Programmes</div>
+                <h2>Choose your starting point.</h2>
+                <div class="grid">
+                    <div class="card course-card">
+                        <div class="icon">✨</div><span class="tag">Beginner friendly</span>
+                        <h3>AI Foundations & Prompting</h3>
+                        <p class="muted">Understand generative AI, write better prompts and use AI responsibly.</p>
+                        <p class="price">Short programme</p><button class="btn purple"
+                            onclick="chooseCourse('AI Foundations & Prompting')">Enquire now</button>
+                    </div>
+                    <div class="card course-card">
+                        <div class="icon">💻</div><span class="tag">Build projects</span>
+                        <h3>Digital Productivity Toolkit</h3>
+                        <p class="muted">Work smarter with modern digital tools, workflows and automation basics.</p>
+                        <p class="price">Practical programme</p><button class="btn purple"
+                            onclick="chooseCourse('Digital Productivity Toolkit')">Enquire now</button>
+                    </div>
+                    <div class="card course-card">
+                        <div class="icon">🚀</div><span class="tag">Career focused</span>
+                        <h3>AI for Projects & Careers</h3>
+                        <p class="muted">Use AI to research, create, prototype and present a portfolio project.</p>
+                        <p class="price">Project programme</p><button class="btn purple"
+                            onclick="chooseCourse('AI for Projects & Careers')">Enquire now</button>
+                    </div>
+                </div>
+                <p class="small">Programme names and formats are illustrative concepts; confirm actual curriculum, fees,
+                    duration and outcomes before publishing.</p>
+            </div>
+            <div style="padding:35px 0 10px">
+                <div class="eyebrow">Your learning journey</div>
+                <h2>From curiosity to confidence.</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="num">01 / DISCOVER</div><b>Choose a goal</b><span class="small">Tell us what you
+                            want to learn.</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">02 / ENROL</div><b>Get guidance</b><span class="small">Receive programme
+                            details and next steps.</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">03 / PRACTISE</div><b>Build something</b><span class="small">Learn through
+                            tasks and feedback.</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">04 / SHOWCASE</div><b>Share your work</b><span class="small">Present your
+                            learning outcomes.</span>
+                    </div>
+                </div>
+            </div>
+            <div id="register" style="padding:40px 0">
+                <div class="formbox">
+                    <div class="eyebrow">Get programme details</div>
+                    <h2 style="font-size:25px">Let's find the right programme for you.</h2>
+                    <p class="muted">Submit an enquiry and our team can follow up with relevant details.</p>
+                    <form
+                        onsubmit="event.preventDefault();document.getElementById('course-success').textContent='Demo submitted! In production, send this lead to a CRM or Google Sheet with consent.';this.reset()">
+                        <div class="formgrid">
+                            <div><label>Full name</label><input class="field" required placeholder="Your name"></div>
+                            <div><label>Email address</label><input class="field" type="email" required
+                                    placeholder="you@example.com"></div>
+                            <div><label>I'm a</label><select class="field">
+                                    <option>Student</option>
+                                    <option>Working professional</option>
+                                    <option>Career switcher</option>
+                                    <option>Other</option>
+                                </select></div>
+                            <div><label>Programme of interest</label><select id="course-choice" class="field">
+                                    <option>Not sure yet</option>
+                                    <option>AI Foundations & Prompting</option>
+                                    <option>Digital Productivity Toolkit</option>
+                                    <option>AI for Projects & Careers</option>
+                                </select></div>
+                        </div><label>What would you like to achieve? (optional)</label><textarea class="field" rows="3"
+                            placeholder="Tell us about your learning goal"></textarea>
+                        <p class="small">By submitting, you agree to be contacted about programme information. Add a
+                            privacy notice and consent record before production use.</p><button class="btn purple"
+                            type="submit">Request a callback →</button>
+                        <p id="course-success" class="small" role="status"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="studio" class="section">
+            <div class="eyebrow">AI-POWERED CONTENT CREATION SYSTEM</div>
+            <h1>From raw idea to <span style="color:var(--purple)">ready-to-publish</span> carousel.</h1>
+            <p class="lead">A lightweight content pipeline that helps a founder create consistent Instagram and LinkedIn
+                carousels without depending on an in-house graphic designer.</p>
+            <div class="carousel-shell" style="margin-top:28px">
+                <div>
+                    <div class="eyebrow" style="color:var(--purple)">SAMPLE CAROUSEL · AI PRODUCTIVITY</div>
+                    <h2 style="margin-top:10px">5 ways to use AI more effectively</h2>
+                    <p class="muted">A sample educational carousel demonstrating the proposed output. Use the arrows to
+                        preview each slide.</p>
+                    <div class="controls"><button onclick="changeSlide(-1)">← Previous</button><button
+                            onclick="changeSlide(1)">Next →</button></div>
+                    <p class="small" id="slide-counter">Slide 1 of 6</p>
+                </div>
+                <div>
+                    <div class="slide">
+                        <div class="snum" id="slide-kicker">THE PRACTICAL AI PLAYBOOK · 01</div>
+                        <h2 id="slide-title">AI is not the strategy. Your question is.</h2>
+                        <p id="slide-copy">Better results start with a clear goal, useful context and a specific output.
+                        </p>
+                        <div class="foot" id="slide-foot">SAVE THIS FOR LATER · FIELDNOTE</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:38px 0 10px">
+                <div class="eyebrow" style="color:var(--purple)">Repeatable workflow</div>
+                <h2>One idea. A complete content system.</h2>
+                <div class="workflow">
+                    <div class="wf">💡<b>1. Capture idea</b><span class="small">Founder submits topic, audience and
+                            objective through a simple form.</span></div>
+                    <div class="wf">🔎<b>2. Research & outline</b><span class="small">ChatGPT researches, structures key
+                            points and flags facts to verify.</span></div>
+                    <div class="wf">✍️<b>3. Write slides</b><span class="small">Generate hook, slide copy, examples, CTA
+                            and caption.</span></div>
+                    <div class="wf">🎨<b>4. Design carousel</b><span class="small">Apply brand template in Canva; create
+                            editable slides.</span></div>
+                    <div class="wf">✅<b>5. Review & export</b><span class="small">Founder checks accuracy, edits, then
+                            exports platform-ready files.</span></div>
+                </div>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Recommended tools</h3>
+                    <p class="muted"><b>ChatGPT:</b> ideation, research assistance, outline, copy and caption
+                        drafts.<br><b>Canva:</b> branded, editable carousel templates and exports.<br><b>Make / n8n:</b>
+                        connect form, AI steps, file storage and review notification.<br><b>Google Drive:</b> keep
+                        drafts, approved assets and brand guidelines.</p>
+                </div>
+                <div class="card">
+                    <h3>Simple automation logic</h3>
+                    <p class="muted">Form submission → create content brief → AI generates structured draft → save copy
+                        to document → notify founder for review → founder approves → create/update Canva design → export
+                        and archive.</p>
+                </div>
+                <div class="card">
+                    <h3>Human review matters</h3>
+                    <p class="muted">AI output is a draft, not an automatic truth source. Verify statistics, citations,
+                        medical or legal claims, image rights and brand tone before publishing.</p>
+                </div>
+            </div>
+            <div class="callout"><b>Implementation note:</b> This prototype demonstrates the proposed workflow and a
+                sample carousel. It does not claim to run live AI research, Canva generation or Make/n8n automation.
+                Those integrations would be configured using the founder's accounts and API permissions.</div>
+            <div class="card" style="margin-top:20px">
+                <h3>Reusable founder input brief</h3>
+                <p class="muted">Topic, target audience, platform, objective, tone, key points, source links, desired
+                    slide count and CTA. This makes each generation more consistent and reduces back-and-forth.</p>
+                <button class="btn purple"
+                    onclick="navigator.clipboard?.writeText('Create a 6-slide educational carousel. Topic: [topic]. Audience: [audience]. Platform: Instagram and LinkedIn. Goal: [goal]. Tone: clear, practical and credible. Include a strong hook, one idea per slide, concise copy, an actionable takeaway, a final CTA, a caption and sources for factual claims. Flag anything that needs verification.');alert('Prompt copied if clipboard permission is available.')">Copy
+                    sample AI prompt</button>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="wrap">Concept portfolio · Product Development, Design & AI Systems Intern · All provider listings
+            and programme details are illustrative demo content, not verified real-world services.</div>
+    </footer>
+    <script>
+        document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {document.querySelectorAll('.tabs button').forEach(x => x.classList.remove('active')); document.querySelectorAll('.section').forEach(x => x.classList.remove('active')); b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active'); window.scrollTo({top: 0, behavior: 'smooth'})}));
+        let activeType = 'All';
+        document.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => {document.querySelectorAll('.filter').forEach(x => x.classList.remove('active')); b.classList.add('active'); activeType = b.dataset.filter; filterProviders()}));
+        function filterProviders() {let q = document.getElementById('search').value.toLowerCase(), city = document.getElementById('city').value, count = 0; document.querySelectorAll('.provider').forEach(p => {let ok = (activeType === 'All' || p.dataset.type === activeType) && (!city || p.dataset.city === city) && (p.dataset.search.includes(q) || p.innerText.toLowerCase().includes(q)); p.classList.toggle('hidden', !ok); if (ok) count++}); document.getElementById('empty').classList.toggle('hidden', count > 0)}
+        function chooseCourse(v) {document.getElementById('course-choice').value = v; document.getElementById('register').scrollIntoView({behavior: 'smooth'})}
+        const slides = [
+            ['THE PRACTICAL AI PLAYBOOK · 01', 'AI is not the strategy. Your question is.', 'Better results start with a clear goal, useful context and a specific output.', 'SAVE THIS FOR LATER · FIELDNOTE'],
+            ['START WITH CONTEXT · 02', 'Give AI the background.', 'Explain your audience, situation, constraints and what you already know. Context makes answers more relevant.', 'CONTEXT BEFORE PROMPTS'],
+            ['BE SPECIFIC · 03', 'Ask for an outcome, not “some ideas”.', 'Define the format, length, tone and success criteria. For example: “Give me 3 options in a comparison table.”', 'MAKE THE OUTPUT CLEAR'],
+            ['WORK IN STEPS · 04', 'Treat it like a collaborator.', 'Ask for an outline first. Review it. Then develop one section at a time instead of requesting everything at once.', 'ITERATE WITH INTENTION'],
+            ['VERIFY THE IMPORTANT PARTS · 05', 'Fluent does not always mean factual.', 'Check numbers, dates, sources and high-stakes claims. Use trusted references and your own judgement.', 'HUMAN REVIEW IS ESSENTIAL'],
+            ['PUT IT INTO ACTION · 06', 'Use AI to move work forward.', 'Choose one repetitive task this week. Create a simple workflow, test it and improve it. Save this post and share it with a curious friend.', 'FOLLOW FOR PRACTICAL AI TIPS']
+        ]; let slideIndex = 0;
+        function renderSlide() {let s = slides[slideIndex]; document.getElementById('slide-kicker').textContent = s[0]; document.getElementById('slide-title').textContent = s[1]; document.getElementById('slide-copy').textContent = s[2]; document.getElementById('slide-foot').textContent = s[3]; document.getElementById('slide-counter').textContent = `Slide ${slideIndex + 1} of ${slides.length}`}
+        function changeSlide(d) {slideIndex = (slideIndex + d + slides.length) % slides.length; renderSlide()}
+    </script>
+</body>
+
+</html>
